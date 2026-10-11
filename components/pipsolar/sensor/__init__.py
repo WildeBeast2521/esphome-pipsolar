@@ -291,7 +291,7 @@ TYPES = {
     CONF_MPPT1_CHARGER_STATUS: sensor.sensor_schema(
         accuracy_decimals=0,
     ),
-    CONF_MPPT1_CHARGER_STATUS: sensor.sensor_schema(
+    CONF_MPPT2_CHARGER_STATUS: sensor.sensor_schema(
         accuracy_decimals=0,
     ),
     CONF_BATTERY_POWER_DIRECTION: sensor.sensor_schema(
