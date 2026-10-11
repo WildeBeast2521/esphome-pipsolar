@@ -96,6 +96,9 @@ void Pipsolar::loop() {
           }
         }
 
+        this->state_ = STATE_IDLE;
+        break;
+
       case POLLING_P007PIRI:
         if (this->grid_rating_voltage_) {
           this->grid_rating_voltage_->publish_state(value_grid_rating_voltage_ * 0.1);
