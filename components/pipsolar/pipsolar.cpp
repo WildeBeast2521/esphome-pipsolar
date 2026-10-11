@@ -38,30 +38,56 @@ void Pipsolar::loop() {
     }
   }
   if (this->state_ == STATE_COMMAND_COMPLETE) {
-    if (this->check_incoming_length_(4)) {
+
+    // PI18 / INFINI VII command response:
+    // Success = ^1 + CRC + CR
+    // Failure = ^0 + CRC + CR
+
+    if (this->check_incoming_length_(2)) {
+
       ESP_LOGD(TAG, "response length for command OK");
+
       if (this->check_incoming_crc_()) {
-        // crc ok
-        if (this->read_buffer_[1] == 'A' && this->read_buffer_[2] == 'C' && this->read_buffer_[3] == 'K') {
+
+        if (this->read_buffer_[0] == '^' &&
+            this->read_buffer_[1] == '1') {
+
           ESP_LOGD(TAG, "command successful");
+
+        } else if (this->read_buffer_[0] == '^' &&
+                   this->read_buffer_[1] == '0') {
+
+          ESP_LOGD(TAG, "command rejected by inverter");
+
         } else {
-          ESP_LOGD(TAG, "command not successful");
+
+          ESP_LOGD(TAG, "unknown command response");
+
         }
-        this->command_queue_[this->command_queue_position_] = std::string("");
-        this->command_queue_position_ = (command_queue_position_ + 1) % COMMAND_QUEUE_LENGTH;
-        this->state_ = STATE_IDLE;
 
       } else {
-        // crc failed
-        this->command_queue_[this->command_queue_position_] = std::string("");
-        this->command_queue_position_ = (command_queue_position_ + 1) % COMMAND_QUEUE_LENGTH;
-        this->state_ = STATE_IDLE;
+
+        ESP_LOGD(TAG, "command response CRC failed");
+
       }
-    } else {
-      ESP_LOGD(TAG, "response length for command %s not OK: with length %zu",
-               this->command_queue_[this->command_queue_position_].c_str(), this->read_pos_);
+
       this->command_queue_[this->command_queue_position_] = std::string("");
-      this->command_queue_position_ = (command_queue_position_ + 1) % COMMAND_QUEUE_LENGTH;
+      this->command_queue_position_ =
+          (this->command_queue_position_ + 1) % COMMAND_QUEUE_LENGTH;
+      this->state_ = STATE_IDLE;
+
+    } else {
+
+      ESP_LOGD(
+          TAG,
+          "response length for command %s not OK: with length %zu",
+          this->command_queue_[this->command_queue_position_].c_str(),
+          this->read_pos_
+      );
+
+      this->command_queue_[this->command_queue_position_] = std::string("");
+      this->command_queue_position_ =
+          (this->command_queue_position_ + 1) % COMMAND_QUEUE_LENGTH;
       this->state_ = STATE_IDLE;
     }
   }
