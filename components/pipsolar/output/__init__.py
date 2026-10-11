@@ -36,35 +36,37 @@ CONF_CURRENT_MAX_CHARGING_CURRENT = "current_max_charging_current"
 # CONF_BATTERY_FLOAT_VOLTAGE = "battery_float_voltage"
 # CONF_BATTERY_TYPE = "battery_type"
 #
-# CONF_OUTPUT_SOURCE_PRIORITY = "output_source_priority"
-# CONF_CHARGER_SOURCE_PRIORITY = "charger_source_priority"
+CONF_OUTPUT_SOURCE_PRIORITY = "output_source_priority"
+CONF_CHARGER_SOURCE_PRIORITY = "charger_source_priority"
 # CONF_BATTERY_REDISCHARGE_VOLTAGE = "battery_redischarge_voltage"
 
 TYPES = {
     CONF_CURRENT_MAX_AC_CHARGING_CURRENT: (
         [2, 10, 20, 30, 40, 50, 60, 70, 80, 90],
-        "^S013MUCHGC0,%02d",
+        "^S013MUCHGC0,%02.0f",
     ),
+
     CONF_CURRENT_MAX_CHARGING_CURRENT: (
         [10, 20, 30, 40, 50, 60, 70, 80, 90],
-        "^S013MCHGC0,%02d",
+        "^S013MCHGC0,%02.0f",
     ),
-    #    CONF_BATTERY_RECHARGE_VOLTAGE: (
-    #        [440, 450, 460, 470, 480, 490, 500, 510],
-    #        "PBCV%02.1f",
-    #    ),
-    #    CONF_BATTERY_REDISCHARGE_VOLTAGE: (
-    #        [0, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58],
-    #        "PBDV%02.1f",
-    #    ),
-    #    CONF_BATTERY_UNDER_VOLTAGE: (
-    #        [40.0, 40.1, 42, 43, 44, 45, 46, 47, 48.0],
-    #        "PSDV%02.1f",
-    #    ),
-    #    CONF_BATTERY_FLOAT_VOLTAGE: ([48.0, 49.0, 50.0, 51.0], "PBFT%02.1f"),
-    #    CONF_BATTERY_TYPE: ([0, 1, 2], "PBT%02.0f"),
-    #    CONF_OUTPUT_SOURCE_PRIORITY: ([0, 1, 2], "POP%02.0f"),
-    #    CONF_CHARGER_SOURCE_PRIORITY: ([0, 1, 2, 3], "PCP%02.0f"),
+
+    # INFINI VII / PI18
+    # 0 = Solar -> Utility -> Battery
+    # 1 = Solar -> Battery -> Utility
+    CONF_OUTPUT_SOURCE_PRIORITY: (
+        [0, 1],
+        "^S007POP%.0f",
+    ),
+
+    # INFINI VII / PI18
+    # 0 = Solar first
+    # 1 = Solar and Utility
+    # 2 = Only Solar
+    CONF_CHARGER_SOURCE_PRIORITY: (
+        [0, 1, 2],
+        "^S009PCP0,%.0f",
+    ),
 }
 
 CONFIG_SCHEMA = PIPSOLAR_COMPONENT_SCHEMA.extend(
@@ -73,7 +75,7 @@ CONFIG_SCHEMA = PIPSOLAR_COMPONENT_SCHEMA.extend(
             {
                 cv.Required(CONF_ID): cv.declare_id(PipsolarOutput),
                 cv.Optional(CONF_POSSIBLE_VALUES, default=values): cv.All(
-                    cv.ensure_list(cv.positive_float), cv.Length(min=1)
+                    cv.ensure_list(cv.float_), cv.Length(min=1)
                 ),
             }
         )
@@ -102,7 +104,7 @@ async def to_code(config):
     cv.Schema(
         {
             cv.Required(CONF_ID): cv.use_id(CONF_ID),
-            cv.Required(CONF_VALUE): cv.templatable(cv.positive_float),
+            cv.Required(CONF_VALUE): cv.templatable(cv.float_),
         }
     ),
 )
