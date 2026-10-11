@@ -42,12 +42,12 @@ CONF_CHARGER_SOURCE_PRIORITY = "charger_source_priority"
 
 TYPES = {
     CONF_CURRENT_MAX_AC_CHARGING_CURRENT: (
-        [2, 10, 20, 30, 40, 50, 60, 70, 80, 90],
+        [2, 10, 20, 30, 40, 50, 60, 70, 80],
         "^S013MUCHGC0,%02.0f",
     ),
 
     CONF_CURRENT_MAX_CHARGING_CURRENT: (
-        [10, 20, 30, 40, 50, 60, 70, 80, 90],
+        [10, 20, 30, 40, 50, 60, 70, 80],
         "^S013MCHGC0,%02.0f",
     ),
 
