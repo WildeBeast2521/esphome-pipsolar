@@ -48,7 +48,7 @@ TYPES = {
 
     CONF_CURRENT_MAX_CHARGING_CURRENT: (
         [10, 20, 30, 40, 50, 60, 70, 80],
-        "^S013MCHGC0,%02.0f",
+        "^S013MCHGC%04.0f",
     ),
 
     # INFINI VII / PI18
