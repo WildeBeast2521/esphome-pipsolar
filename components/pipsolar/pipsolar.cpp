@@ -771,6 +771,14 @@ void Pipsolar::dump_config() {
 void Pipsolar::update() {}
 
 void Pipsolar::add_polling_command_(const char *command, ENUMPollingCommand polling_command) {
+
+  // INFINI VII: live status uses P005GS rather than P007GS.
+  // Keep POLLING_P007GS as the internal identifier so the existing
+  // 28-field PI18 decoder can still be used unchanged.
+  if (polling_command == POLLING_P007GS) {
+    command = "^P005GS";
+  }
+
   for (auto &used_polling_command : this->used_polling_commands_) {
     if (used_polling_command.length == strlen(command)) {
       uint8_t len = strlen(command);
