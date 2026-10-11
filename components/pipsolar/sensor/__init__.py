@@ -88,6 +88,43 @@ CONF_TOTAL_AC_OUTPUT_ACTIVE_POWER = "total_ac_output_active_power"
 CONF_TOTAL_OUTPUT_LOAD_PERCENT = "total_output_load_percent"
 CONF_TOTAL_BATTERY_CHARGING_CURRENT = "total_battery_charging_current"
 
+CONF_PARALLEL_CONNECTION_STATUS = "parallel_connection_status"
+CONF_PARALLEL_WORK_MODE = "parallel_work_mode"
+CONF_PARALLEL_FAULT_CODE = "parallel_fault_code"
+
+CONF_PARALLEL_GRID_VOLTAGE = "parallel_grid_voltage"
+CONF_PARALLEL_GRID_FREQUENCY = "parallel_grid_frequency"
+
+CONF_PARALLEL_AC_OUTPUT_VOLTAGE = "parallel_ac_output_voltage"
+CONF_PARALLEL_AC_OUTPUT_FREQUENCY = "parallel_ac_output_frequency"
+
+CONF_PARALLEL_AC_OUTPUT_APPARENT_POWER = "parallel_ac_output_apparent_power"
+CONF_PARALLEL_AC_OUTPUT_ACTIVE_POWER = "parallel_ac_output_active_power"
+
+CONF_PARALLEL_OUTPUT_LOAD_PERCENT = "parallel_output_load_percent"
+
+CONF_PARALLEL_BATTERY_VOLTAGE = "parallel_battery_voltage"
+CONF_PARALLEL_BATTERY_DISCHARGE_CURRENT = "parallel_battery_discharge_current"
+CONF_PARALLEL_BATTERY_CHARGING_CURRENT = "parallel_battery_charging_current"
+CONF_PARALLEL_BATTERY_CAPACITY_PERCENT = "parallel_battery_capacity_percent"
+
+CONF_PARALLEL_PV1_INPUT_POWER = "parallel_pv1_input_power"
+CONF_PARALLEL_PV2_INPUT_POWER = "parallel_pv2_input_power"
+
+CONF_PARALLEL_PV1_INPUT_VOLTAGE = "parallel_pv1_input_voltage"
+CONF_PARALLEL_PV2_INPUT_VOLTAGE = "parallel_pv2_input_voltage"
+
+CONF_PARALLEL_MPPT1_CHARGER_STATUS = "parallel_mppt1_charger_status"
+CONF_PARALLEL_MPPT2_CHARGER_STATUS = "parallel_mppt2_charger_status"
+
+CONF_PARALLEL_LOAD_CONNECTION = "parallel_load_connection"
+
+CONF_PARALLEL_BATTERY_POWER_DIRECTION = "parallel_battery_power_direction"
+CONF_PARALLEL_DC_AC_POWER_DIRECTION = "parallel_dc_ac_power_direction"
+CONF_PARALLEL_LINE_POWER_DIRECTION = "parallel_line_power_direction"
+
+CONF_PARALLEL_MAX_TEMPERATURE = "parallel_max_temperature"
+
 TYPES = {
     CONF_GRID_RATING_VOLTAGE: sensor.sensor_schema(
         unit_of_measurement=UNIT_VOLT,
@@ -334,6 +371,109 @@ TYPES = {
         unit_of_measurement=UNIT_AMPERE,
         accuracy_decimals=0,
         device_class=DEVICE_CLASS_CURRENT,
+    ),
+
+    CONF_PARALLEL_CONNECTION_STATUS: sensor.sensor_schema(
+        accuracy_decimals=0,
+    ),
+    CONF_PARALLEL_WORK_MODE: sensor.sensor_schema(
+        accuracy_decimals=0,
+    ),
+    CONF_PARALLEL_FAULT_CODE: sensor.sensor_schema(
+        accuracy_decimals=0,
+    ),
+
+    CONF_PARALLEL_GRID_VOLTAGE: sensor.sensor_schema(
+        unit_of_measurement="V",
+        accuracy_decimals=1,
+    ),
+    CONF_PARALLEL_GRID_FREQUENCY: sensor.sensor_schema(
+        unit_of_measurement="Hz",
+        accuracy_decimals=1,
+    ),
+
+    CONF_PARALLEL_AC_OUTPUT_VOLTAGE: sensor.sensor_schema(
+        unit_of_measurement="V",
+        accuracy_decimals=1,
+    ),
+    CONF_PARALLEL_AC_OUTPUT_FREQUENCY: sensor.sensor_schema(
+        unit_of_measurement="Hz",
+        accuracy_decimals=1,
+    ),
+
+    CONF_PARALLEL_AC_OUTPUT_APPARENT_POWER: sensor.sensor_schema(
+        unit_of_measurement="VA",
+        accuracy_decimals=0,
+    ),
+    CONF_PARALLEL_AC_OUTPUT_ACTIVE_POWER: sensor.sensor_schema(
+        unit_of_measurement="W",
+        accuracy_decimals=0,
+    ),
+
+    CONF_PARALLEL_OUTPUT_LOAD_PERCENT: sensor.sensor_schema(
+        unit_of_measurement="%",
+        accuracy_decimals=0,
+    ),
+
+    CONF_PARALLEL_BATTERY_VOLTAGE: sensor.sensor_schema(
+        unit_of_measurement="V",
+        accuracy_decimals=1,
+    ),
+    CONF_PARALLEL_BATTERY_DISCHARGE_CURRENT: sensor.sensor_schema(
+        unit_of_measurement="A",
+        accuracy_decimals=0,
+    ),
+    CONF_PARALLEL_BATTERY_CHARGING_CURRENT: sensor.sensor_schema(
+        unit_of_measurement="A",
+        accuracy_decimals=0,
+    ),
+    CONF_PARALLEL_BATTERY_CAPACITY_PERCENT: sensor.sensor_schema(
+        unit_of_measurement="%",
+        accuracy_decimals=0,
+    ),
+
+    CONF_PARALLEL_PV1_INPUT_POWER: sensor.sensor_schema(
+        unit_of_measurement="W",
+        accuracy_decimals=0,
+    ),
+    CONF_PARALLEL_PV2_INPUT_POWER: sensor.sensor_schema(
+        unit_of_measurement="W",
+        accuracy_decimals=0,
+    ),
+
+    CONF_PARALLEL_PV1_INPUT_VOLTAGE: sensor.sensor_schema(
+        unit_of_measurement="V",
+        accuracy_decimals=1,
+    ),
+    CONF_PARALLEL_PV2_INPUT_VOLTAGE: sensor.sensor_schema(
+        unit_of_measurement="V",
+        accuracy_decimals=1,
+    ),
+
+    CONF_PARALLEL_MPPT1_CHARGER_STATUS: sensor.sensor_schema(
+        accuracy_decimals=0,
+    ),
+    CONF_PARALLEL_MPPT2_CHARGER_STATUS: sensor.sensor_schema(
+        accuracy_decimals=0,
+    ),
+
+    CONF_PARALLEL_LOAD_CONNECTION: sensor.sensor_schema(
+        accuracy_decimals=0,
+    ),
+
+    CONF_PARALLEL_BATTERY_POWER_DIRECTION: sensor.sensor_schema(
+        accuracy_decimals=0,
+    ),
+    CONF_PARALLEL_DC_AC_POWER_DIRECTION: sensor.sensor_schema(
+        accuracy_decimals=0,
+    ),
+    CONF_PARALLEL_LINE_POWER_DIRECTION: sensor.sensor_schema(
+        accuracy_decimals=0,
+    ),
+
+    CONF_PARALLEL_MAX_TEMPERATURE: sensor.sensor_schema(
+        unit_of_measurement="°C",
+        accuracy_decimals=0,
     ),
 }
 
