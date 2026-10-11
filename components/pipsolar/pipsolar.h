@@ -95,18 +95,18 @@ class Pipsolar : public uart::UARTDevice, public PollingComponent {
   PIPSOLAR_SENSOR(parallel_work_mode, P007PGS0, int)
   PIPSOLAR_SENSOR(parallel_fault_code, P007PGS0, int)
 
-  PIPSOLAR_SENSOR(parallel_grid_voltage, P007PGS0, float)
-  PIPSOLAR_SENSOR(parallel_grid_frequency, P007PGS0, float)
+  PIPSOLAR_SENSOR(parallel_grid_voltage, P007PGS0, int)
+  PIPSOLAR_SENSOR(parallel_grid_frequency, P007PGS0, int)
 
-  PIPSOLAR_SENSOR(parallel_ac_output_voltage, P007PGS0, float)
-  PIPSOLAR_SENSOR(parallel_ac_output_frequency, P007PGS0, float)
+  PIPSOLAR_SENSOR(parallel_ac_output_voltage, P007PGS0, int)
+  PIPSOLAR_SENSOR(parallel_ac_output_frequency, P007PGS0, int)
 
   PIPSOLAR_SENSOR(parallel_ac_output_apparent_power, P007PGS0, int)
   PIPSOLAR_SENSOR(parallel_ac_output_active_power, P007PGS0, int)
 
   PIPSOLAR_SENSOR(parallel_output_load_percent, P007PGS0, int)
 
-  PIPSOLAR_SENSOR(parallel_battery_voltage, P007PGS0, float)
+  PIPSOLAR_SENSOR(parallel_battery_voltage, P007PGS0, int)
   PIPSOLAR_SENSOR(parallel_battery_discharge_current, P007PGS0, int)
   PIPSOLAR_SENSOR(parallel_battery_charging_current, P007PGS0, int)
   PIPSOLAR_SENSOR(parallel_battery_capacity_percent, P007PGS0, int)
@@ -114,8 +114,8 @@ class Pipsolar : public uart::UARTDevice, public PollingComponent {
   PIPSOLAR_SENSOR(parallel_pv1_input_power, P007PGS0, int)
   PIPSOLAR_SENSOR(parallel_pv2_input_power, P007PGS0, int)
 
-  PIPSOLAR_SENSOR(parallel_pv1_input_voltage, P007PGS0, float)
-  PIPSOLAR_SENSOR(parallel_pv2_input_voltage, P007PGS0, float)
+  PIPSOLAR_SENSOR(parallel_pv1_input_voltage, P007PGS0, int)
+  PIPSOLAR_SENSOR(parallel_pv2_input_voltage, P007PGS0, int)
 
   PIPSOLAR_SENSOR(parallel_mppt1_charger_status, P007PGS0, int)
   PIPSOLAR_SENSOR(parallel_mppt2_charger_status, P007PGS0, int)
