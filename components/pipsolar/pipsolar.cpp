@@ -419,6 +419,80 @@ void Pipsolar::loop() {
         if (this->total_battery_charging_current_) {
           this->total_battery_charging_current_->publish_state(value_total_battery_charging_current_);
         }
+        if (this->parallel_connection_status_)
+          this->parallel_connection_status_->publish_state(value_parallel_connection_status_);
+
+        if (this->parallel_work_mode_)
+          this->parallel_work_mode_->publish_state(value_parallel_work_mode_);
+
+        if (this->parallel_fault_code_)
+          this->parallel_fault_code_->publish_state(value_parallel_fault_code_);
+
+        if (this->parallel_grid_voltage_)
+          this->parallel_grid_voltage_->publish_state(value_parallel_grid_voltage_ * 0.1);
+
+        if (this->parallel_grid_frequency_)
+          this->parallel_grid_frequency_->publish_state(value_parallel_grid_frequency_ * 0.1);
+
+        if (this->parallel_ac_output_voltage_)
+          this->parallel_ac_output_voltage_->publish_state(value_parallel_ac_output_voltage_ * 0.1);
+
+        if (this->parallel_ac_output_frequency_)
+          this->parallel_ac_output_frequency_->publish_state(value_parallel_ac_output_frequency_ * 0.1);
+
+        if (this->parallel_ac_output_apparent_power_)
+          this->parallel_ac_output_apparent_power_->publish_state(value_parallel_ac_output_apparent_power_);
+
+        if (this->parallel_ac_output_active_power_)
+          this->parallel_ac_output_active_power_->publish_state(value_parallel_ac_output_active_power_);
+
+        if (this->parallel_output_load_percent_)
+          this->parallel_output_load_percent_->publish_state(value_parallel_output_load_percent_);
+
+        if (this->parallel_battery_voltage_)
+          this->parallel_battery_voltage_->publish_state(value_parallel_battery_voltage_ * 0.1);
+
+        if (this->parallel_battery_discharge_current_)
+          this->parallel_battery_discharge_current_->publish_state(value_parallel_battery_discharge_current_);
+
+        if (this->parallel_battery_charging_current_)
+          this->parallel_battery_charging_current_->publish_state(value_parallel_battery_charging_current_);
+
+        if (this->parallel_battery_capacity_percent_)
+          this->parallel_battery_capacity_percent_->publish_state(value_parallel_battery_capacity_percent_);
+
+        if (this->parallel_pv1_input_power_)
+          this->parallel_pv1_input_power_->publish_state(value_parallel_pv1_input_power_);
+
+        if (this->parallel_pv2_input_power_)
+          this->parallel_pv2_input_power_->publish_state(value_parallel_pv2_input_power_);
+
+        if (this->parallel_pv1_input_voltage_)
+          this->parallel_pv1_input_voltage_->publish_state(value_parallel_pv1_input_voltage_ * 0.1);
+
+        if (this->parallel_pv2_input_voltage_)
+          this->parallel_pv2_input_voltage_->publish_state(value_parallel_pv2_input_voltage_ * 0.1);
+
+        if (this->parallel_mppt1_charger_status_)
+          this->parallel_mppt1_charger_status_->publish_state(value_parallel_mppt1_charger_status_);
+
+        if (this->parallel_mppt2_charger_status_)
+          this->parallel_mppt2_charger_status_->publish_state(value_parallel_mppt2_charger_status_);
+
+        if (this->parallel_load_connection_)
+          this->parallel_load_connection_->publish_state(value_parallel_load_connection_);
+
+        if (this->parallel_battery_power_direction_)
+          this->parallel_battery_power_direction_->publish_state(value_parallel_battery_power_direction_);
+
+        if (this->parallel_dc_ac_power_direction_)
+          this->parallel_dc_ac_power_direction_->publish_state(value_parallel_dc_ac_power_direction_);
+
+        if (this->parallel_line_power_direction_)
+          this->parallel_line_power_direction_->publish_state(value_parallel_line_power_direction_);
+
+        if (this->parallel_max_temperature_)
+          this->parallel_max_temperature_->publish_state(value_parallel_max_temperature_);
         this->state_ = STATE_IDLE;
         break;
     }
@@ -553,41 +627,55 @@ void Pipsolar::loop() {
       case POLLING_P007PGS0:
         ESP_LOGD(TAG, "Decode P007PGS0");
         //"^D1131,3,00,2384,500,2301,500,1287,1286,02621,02600,022,023,522,025,000,000,080,0027,0000,1200,0000,2,0,1,2,2,0,048D\xDF\r"
-        sscanf(tmp,  // 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29
-               "^D%3d%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d", &ind,
-               &ind, &ind, &ind, &ind, &ind, &ind, &ind, &ind, &ind,
-               //                                &value_one_parallel_id_connection_status_, //1 A
-               //                                &value_one_work_mode_, //2 B
-               //                                &value_one_faults_code_, //3 CC
-               //                                &value_one_grid_voltage_, //4 DDDD
-               //                                &value_one_grid_frequency_, //5 EEE
-               //                                &value_one_ac_output_voltage_, // 6 FFFF
-               //                                &value_one_ac_output_frequency_, // 7 GGG
-               //                                &value_one_ac_output_apparent_power_, //8 HHHH
-               //                                &value_one_ac_output_active_power_, //9 IIII
-               &value_total_ac_output_apparent_power_,  // 10 JJJJJ
-               &value_total_ac_output_active_power_,    // 11 KKKKK
-               &ind,                                    // &value_one_output_load_percent_, //12 LLL
-               &value_total_output_load_percent_,       // 13 MMM
-               &ind,                                    // &value_one_battery_voltage_, //14 NNN
-               &ind,                                    // &value_one_battery_discharge_current_, //15 OOO
-               &ind,                                    // &value_one_battery_charging_current_, //16 PPP
-               &value_total_battery_charging_current_,  // 17 QQQ
-               &ind, &ind, &ind, &ind, &ind, &ind, &ind, &ind, &ind, &ind, &ind, &ind
-               //                                &value_one_battery_capacity_, //18 MMM
-               //                                &value_one_pv1_input_power_, //19 RRRR
-               //                                &value_one_pv2_input_power_, //20 SSSS
-               //                                &value_one_pv1_input_voltage_, //21 TTTT
-               //                                &value_one_pv2_input_voltage_, // 22 UUUU
-               //                                &value_one_mppt1_charger_status_, //23 V
-               //                                &value_one_mppt2_charger_status_, // 24 W
-               //                                &value_one_load_connection_, //25 X
-               //                                &value_one_battery_power_direction_, //26 Y
-               //                                &value_one_dc_ac_power_direction_, // 27 Z
-               //                                &value_one_line_power_direction_, // 28 a
-               //                                &value_one_max_temperature_ //29 bbb
-        );
-        this->state_ = STATE_POLL_DECODED;
+        sscanf(
+            tmp,
+            "^D%3d%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+            &ind,
+
+            &value_parallel_connection_status_,       // 1
+            &value_parallel_work_mode_,               // 2
+            &value_parallel_fault_code_,              // 3
+
+            &value_parallel_grid_voltage_,            // 4
+            &value_parallel_grid_frequency_,          // 5
+
+            &value_parallel_ac_output_voltage_,       // 6
+            &value_parallel_ac_output_frequency_,     // 7
+
+            &value_parallel_ac_output_apparent_power_,// 8
+            &value_parallel_ac_output_active_power_,  // 9
+
+            &value_total_ac_output_apparent_power_,   // 10
+            &value_total_ac_output_active_power_,     // 11
+
+            &value_parallel_output_load_percent_,     // 12
+            &value_total_output_load_percent_,        // 13
+
+            &value_parallel_battery_voltage_,         // 14
+            &value_parallel_battery_discharge_current_, // 15
+
+            &value_parallel_battery_charging_current_, // 16
+            &value_total_battery_charging_current_,    // 17
+
+            &value_parallel_battery_capacity_percent_, // 18
+
+            &value_parallel_pv1_input_power_,          // 19
+            &value_parallel_pv2_input_power_,          // 20
+
+            &value_parallel_pv1_input_voltage_,        // 21
+            &value_parallel_pv2_input_voltage_,        // 22
+
+            &value_parallel_mppt1_charger_status_,     // 23
+            &value_parallel_mppt2_charger_status_,     // 24
+
+            &value_parallel_load_connection_,          // 25
+
+            &value_parallel_battery_power_direction_,  // 26
+            &value_parallel_dc_ac_power_direction_,    // 27
+            &value_parallel_line_power_direction_,     // 28
+
+            &value_parallel_max_temperature_           // 29
+        );        this->state_ = STATE_POLL_DECODED;
         break;
       default:
         this->state_ = STATE_IDLE;
